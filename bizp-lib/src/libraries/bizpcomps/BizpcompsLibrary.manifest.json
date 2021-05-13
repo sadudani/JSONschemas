@@ -1,0 +1,9 @@
+{
+  "id": "7b5ae38f-af47-4d45-8ed7-27202e07fb92",
+  "alias": "BizpcompsLibrary",
+  "componentType": "Library",
+
+  // The "*" signifies that the version should be taken from the package.json
+  "version": "*",
+  "manifestVersion": 2
+}
