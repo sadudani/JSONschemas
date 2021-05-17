@@ -6,8 +6,6 @@ import styles from './BizpCalendarEventsDisplay.module.scss';
 import {IBizpCalendarEventsDisplayProps} from './IBizpCalendarEventsDisplayProps';
 import {​​BizpEventListDisplay }​​ from "../BizpEventListDisplay/BizpEventListDisplay";
 import {​​BizpEventEntry }​​ from "../../l1/BizpEventEntry/BizpEventEntry";
-import {BizpHierarchyDisplay } from "../BizpHierarchyDisplay/BizpHierarchyDisplay";
-import { getSPSites } from '../../../../shared/BizpBasesvc';
 import {
   DefaultButton,PrimaryButton,Spinner,SpinnerSize,Stack,IconButton,IIconProps,Selection,SelectionMode,
   IContextualMenuProps,IContextualMenuItem,
@@ -119,11 +117,6 @@ export function BizpCalendarEventsDisplay(props: IBizpCalendarEventsDisplayProps
   const editEventIcon: IIconProps = { iconName: 'EditSolid12' };
   const deleteEventIcon: IIconProps = { iconName: 'Delete' };
 
-  async function initSites() {
-    // get sp sites
-    const r = await getSPSites(props.siteUrl);
-  }
-
   async function init(){
     // init pnp context
     SPService(props.context);
@@ -138,7 +131,6 @@ export function BizpCalendarEventsDisplay(props: IBizpCalendarEventsDisplayProps
     if (props.list && p.hasPermissionView) {
       if (!loading) loadData();
     }
-    initSites();
   }
 
   async function loadData(){
@@ -416,9 +408,6 @@ export function BizpCalendarEventsDisplay(props: IBizpCalendarEventsDisplayProps
             }
 
       </Stack>
-      {
-        <BizpHierarchyDisplay siteUrl={props.siteUrl} list={props.list} context = {props.context} refresh = {props.refresh} displayLibs= {false} displayLists= {false}/>
-      }
       <BizpEventListDisplay displayData={data} selection = {selection} refresh = {refresh}></BizpEventListDisplay>
       { showEntryPanel &&
         <BizpEventEntry panelMode = {mode} onDismissEntry = {onDismissEntry} event = {updateEvent} series={calendarEventItems.seriesSelected}

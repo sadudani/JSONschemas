@@ -62,7 +62,7 @@ interface IWebInfosData {
 }
 */
 // Returns all sites and subsites under siteUrl (a site or site collection)
-export async function getSPSites(siteUrl: string):Promise<any[]> {
+export async function getSPSites(siteUrl: string, includeLibs:boolean):Promise<any[]> {
   try {
     const text:string = "contentclass:STS_Web AND NOT WebTemplate:APP OR Path:" + siteUrl + " AND contentclass:STS_Site";
     const searcher = Search(siteUrl);
@@ -75,55 +75,18 @@ export async function getSPSites(siteUrl: string):Promise<any[]> {
     if (results) {
       console.log("sp search results: " + JSON.stringify(results.PrimarySearchResults));
     }
-/*     const topLevel:any = results.PrimarySearchResults;
-    topLevel.push({
-      "Title": "Intranet",
-      "Author": "SharePoint App",
-      "Path": siteUrl,
-      "Description": "Top Level Site",
-      "ParentLink": "",
-      "WebTemplate": "STS",
-      "OriginalPath": siteUrl,
-      "ParentSiteTitle": null,
-      "ResultTypeIdList": null,
-    }); */
-/*     const sample = [
-      {
-        Rank: "16.6951484",
-        DocId: "823993650536595982",
-        Title: "Root-Site",
-        Author: "SharePoint App",
-        Path: "https://zgcompanies.sharepoint.com/sites/zgcompanies",
-        Description: "Your new home for knowledge articles, FAQ and enterprise learning documents. Collaborate, store and manage.",
-        Write: "2020-11-20T10:57:00.0000000Z",
-        ParentId: "{3EEF156B-FBD0-4047-94E2-37A4F5B830F0}",
-        ParentLink: "",
-      },
-      {
-        Rank: "16.6951484",
-        DocId: "823993650536595982",
-        Title: "WikiCenter",
-        Author: "SharePoint App",
-        Path: "https://zgcompanies.sharepoint.com/sites/zgcompanies/WikiCenter",
-        Description: "Your new home for knowledge articles, FAQ and enterprise learning documents. Collaborate, store and manage.",
-        Write: "2020-11-20T10:57:00.0000000Z",
-        ParentId: "{3EEF156B-FBD0-4047-94E2-37A4F5B830F0}",
-        ParentLink: "https://zgcompanies.sharepoint.com/sites/zgcompanies",
-      },
-      {
-        Rank: "16.6951484",
-        DocId: "823993650541146215",
-        Title: "FAQs",
-        Author: "SharePoint App",
-        Path: "https://zgcompanies.sharepoint.com/sites/zgcompanies/faq",
-        Description: "Manage all frequently asked questions here",
-        Write: "2020-11-20T10:50:25.0000000Z",
-        ParentId: "{C4D29DCC-22D4-472F-9A90-FAADD626154D}",
-        ParentLink: "https://zgcompanies.sharepoint.com/sites/zgcompanies",
-      }
-      ]; */
+    let results1:any[];
+    if (includeLibs) {
+      const libs:any[] = await getLibsforSites(siteUrl,results.PrimarySearchResults);
+      results1 = results.PrimarySearchResults.concat(...libs);
+      console.log("Flat data with libraries: " + JSON.stringify(results1));
+    }
+    else {
+      results1 = results.PrimarySearchResults;
+    }
+    // convert flat data to tree
     const tree = arrayToTree(
-      results.PrimarySearchResults,
+      results1,
       { id: "Path", parentId: "ParentLink", childrenField: "children" }
     );
     console.log("sp search results (tree): " + JSON.stringify(tree));
@@ -133,26 +96,37 @@ export async function getSPSites(siteUrl: string):Promise<any[]> {
      console.log ("Error: " + error);
     return Promise.reject(error);
   }
-  /*
-  GetAllSites=()=>
-        {
-            var uri = encodeURIComponent(_spPageContextInfo.siteAbsoluteUrl + "/");
-            var query = "/_api/search/query?querytext='contentclass:STS_Web path:" + uri + "'&trimduplicates=false&rowlimit=3000&selectproperties='Title,Author,Path,Description,Write,ParentLink,SiteLogo,ParentSiteTitle,Created,WebTemplate'";//Issue 551 - added WebTemplate
-            query = query.replace("%3A", ":");
-            query = query.replace("%20", "%2520");
-            return this.baseSvc.getRequest(_spPageContextInfo.siteAbsoluteUrl, query);
-        };
-        */
 }
 
-export async function getSPLibs(siteUrl:string,siteId:string,webId:string) {
+async function getLibsforSites(siteUrl:string,siteData:any[]):Promise<any[]> {
+  // get all libraries under the site collection siteUrl
+  let libs = await getSPLibs(siteUrl);
+  let filteredLibs:any[]=[];
+  let j:any;
+  // get libraries for each site/subsite
+  for(j in siteData) {
+    let e = libs.filter((value) => {
+      return (value.SiteId == siteData[j].SiteId) && (value.WebId == siteData[j].WebId);
+    });
+    filteredLibs.push(...e);
+  }
+  console.log("FilteredLibs: " +JSON.stringify(filteredLibs));
+  return filteredLibs;
+}
+
+export async function getSPLibs(siteUrl:string,siteId?:string,webId?:string):Promise<any[]> {
   try {
-//    IsDocument:"True" OR contentclass:"STS_ListItem"
-    const text:string = "contentclass:STS_List_DocumentLibrary AND WebId:" + webId + " AND SiteId:" + siteId ;
+    let text:string ;
+    if (siteId == undefined || webId == undefined) {
+      text = "contentclass:STS_List_DocumentLibrary";
+    }
+    else {
+      text = "contentclass:STS_List_DocumentLibrary AND WebId:" + webId + " AND SiteId:" + siteId ;
+    }
     const searcher = Search(siteUrl);
     const results: SearchResults = await searcher({
       Querytext: text,
-      SelectProperties: ["Title"],
+      SelectProperties: ["Title","Path","ParentLink"],
       RowLimit: 3000,
       TrimDuplicates: false
     });
