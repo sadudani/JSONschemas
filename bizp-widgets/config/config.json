@@ -17,6 +17,14 @@
           "manifest": "./src/webparts/bizpSiteMap/BizpSiteMapWebPart.manifest.json"
         }
       ]
+    },
+    "bizp-org-chart-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/bizpOrgChart/BizpOrgChartWebPart.js",
+          "manifest": "./src/webparts/bizpOrgChart/BizpOrgChartWebPart.manifest.json"
+        }
+      ]
     }
   },
   "externals": {},
@@ -24,6 +32,7 @@
     "RemindersWebPartStrings": "lib/webparts/reminders/loc/{locale}.js",
     "PropertyControlStrings": "node_modules/@pnp/spfx-property-controls/lib/loc/{locale}.js",
     "ControlStrings": "node_modules/@pnp/spfx-controls-react/lib/loc/{locale}.js",
-    "BizpSiteMapWebPartStrings": "lib/webparts/bizpSiteMap/loc/{locale}.js"
+    "BizpSiteMapWebPartStrings": "lib/webparts/bizpSiteMap/loc/{locale}.js",
+    "BizpOrgChartWebPartStrings": "lib/webparts/bizpOrgChart/loc/{locale}.js"
   }
 }

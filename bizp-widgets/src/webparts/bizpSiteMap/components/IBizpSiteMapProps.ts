@@ -8,4 +8,7 @@ export interface IBizpSiteMapProps {
   list: string;
   context:WebPartContext;
   themeVariant: IReadonlyTheme;
+  layout:number;
+  displayLibs:boolean;
+  displayLists:boolean;
 }

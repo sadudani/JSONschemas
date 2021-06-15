@@ -100,16 +100,18 @@ export function BizpHierarchyDisplay(props: IBizpHierarchyDisplayProps) {
   }
 
   return (
-    <div className={styles.spfxPnpTreeview}>
-    <TreeView
-      items={siteTree}
-      defaultExpanded={false}
-      selectionMode={TreeViewSelectionMode.None}
-      selectChildrenIfParentSelected={true}
-      showCheckboxes={false}
-      treeItemActionsDisplayMode={TreeItemActionsDisplayMode.Buttons}
-      onExpandCollapse={onTreeItemExpandCollapse}
-      onRenderItem={renderCustomTreeItem} />
+    <div className={styles.spfxPnpTreeview} style={{  height: '100%' }} >
+      <div className={styles.scroller}>
+        <TreeView
+          items={siteTree}
+          defaultExpanded={false}
+          selectionMode={TreeViewSelectionMode.None}
+          selectChildrenIfParentSelected={true}
+          showCheckboxes={false}
+          treeItemActionsDisplayMode={TreeItemActionsDisplayMode.Buttons}
+          onExpandCollapse={onTreeItemExpandCollapse}
+          onRenderItem={renderCustomTreeItem} />
+      </div>
     </div>
   );
 }

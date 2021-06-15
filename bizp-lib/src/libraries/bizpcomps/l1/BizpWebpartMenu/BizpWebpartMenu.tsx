@@ -57,14 +57,14 @@ export default function BizpWebpartMenu(props: IBizpWebpartMenuProps) {
   return (
     <div>
       <div>
-      <Stack tokens={{ childrenGap: 8 }} horizontal>
+
         <IconButton
           menuProps={menuProps}
           iconProps={menuIcon}
           title={strings.MenuLabel}
           ariaLabel={strings.MenuLabel}
         />
-      </Stack>
+
       </div>
         <BizpWebpartFeedback feedbackId={"SiteHierarchyWebpart"} showCategory={true}
             themeVariant={props.themeVariant} context={props.context} openSignal={feedbackSignal}

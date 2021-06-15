@@ -5,7 +5,10 @@ import {
   IPropertyPaneConfiguration,
   PropertyPaneTextField,
   PropertyPaneButton,PropertyPaneButtonType,
-  PropertyPaneHorizontalRule
+  PropertyPaneCheckbox,
+  PropertyPaneHorizontalRule,
+  PropertyPaneDropdown,
+  PropertyPaneSlider,
 } from '@microsoft/sp-property-pane';
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 import { ThemeProvider, IReadonlyTheme, ThemeChangedEventArgs } from '@microsoft/sp-component-base';
@@ -20,7 +23,6 @@ import { IBizpSiteMapProps } from './components/IBizpSiteMapProps';
 import { sp } from "@pnp/sp";
 import { setup as pnpSetup } from "@pnp/common";
 import { Logger, ConsoleListener, LogLevel } from "@pnp/logging";
-
 import { PropertyFieldSitePicker } from '@pnp/spfx-property-controls/lib/PropertyFieldSitePicker';
 import { IPropertyFieldSite } from "@pnp/spfx-property-controls/lib/PropertyFieldSitePicker";
 import { PropertyFieldListPicker, PropertyFieldListPickerOrderBy } from '@pnp/spfx-property-controls/lib/PropertyFieldListPicker';
@@ -35,6 +37,10 @@ export interface IBizpSiteMapWebPartProps {
   list: string | string[]; // Stores the list ID(s)
   displayLibs: boolean;
   displayLists: boolean;
+  siteUrl:string;
+  includeLibs:boolean;
+  includeLists:boolean;
+  layout:number;
 }
 export interface IBizpSiteMapWebPartState {
   site: IPropertyFieldSite;
@@ -59,8 +65,8 @@ export default class BizpSiteMapWebPart extends BaseClientSideWebPart<IBizpSiteM
     console.log("Webpart properties:  "+ JSON.stringify(this.properties));
   }
   protected onListConfigurationChanged(propertyPath: string, oldValue: any, newValue: any): void {
-    console.log("onListConfigurationChanged: "+ propertyPath + " " +oldValue + " " +newValue);
-    if (propertyPath === 'lists' && newValue) {
+    this.onPropertyPaneFieldChanged(propertyPath, oldValue, newValue);
+/*     if (propertyPath === 'lists' && newValue) {
       this.onPropertyPaneFieldChanged(propertyPath, oldValue, newValue);
       this.context.propertyPane.refresh();
     }
@@ -78,9 +84,7 @@ export default class BizpSiteMapWebPart extends BaseClientSideWebPart<IBizpSiteM
       else {
         this.list = this.properties.list[0];
         console.log("List Id: "+ this.properties.list[0]);
-      }
-      console.log("Webpart properties:  "+ JSON.stringify(this.properties));
-    }
+      } */
   }
 
   private handleThemeChangedEvent(args: ThemeChangedEventArgs): void {
@@ -96,6 +100,7 @@ export default class BizpSiteMapWebPart extends BaseClientSideWebPart<IBizpSiteM
     this.themeVariant = this.themeProvider.tryGetTheme();
     // Register a handler to be notified if the theme variant changes
     this.themeProvider.themeChangedEvent.add(this, this.handleThemeChangedEvent);
+    console.debug("Theme: ",this.themeVariant);
 
     // subscribe a listener
     Logger.subscribe(new ConsoleListener());
@@ -156,7 +161,7 @@ export default class BizpSiteMapWebPart extends BaseClientSideWebPart<IBizpSiteM
         return Version.parse('1.0');
   }
 
-  protected getPropertyPaneConfiguration(): IPropertyPaneConfiguration {
+  /* protected getPropertyPaneConfiguration(): IPropertyPaneConfiguration {
     let sourceFields:any;
     let sourceSPFields:any = [
       PropertyFieldSitePicker('sites', {
@@ -238,12 +243,89 @@ export default class BizpSiteMapWebPart extends BaseClientSideWebPart<IBizpSiteM
         }
       ]
     };
-  }
+  } */
+  protected getPropertyPaneConfiguration(): IPropertyPaneConfiguration {
+    let sourceFields:any;
+    let sourceSPFields:any = [
+      PropertyPaneTextField('siteUrl', {
+        label: 'Site URL'
+      }),
+      PropertyPaneCheckbox('includeLibs', {
+        text: 'Include Libraries'
+      }),
+      PropertyPaneCheckbox('includeLists', {
+        text: 'Include listsL'
+      }),
+      PropertyPaneDropdown('layout', {
+         label: 'Style',
+         selectedKey: '1',
+         options: [
+           { key: '1', text: 'Simple' },
+           { key: '2', text: 'Modern' },
+           { key: '3', text: 'Explorer' },
+           { key: '4', text: 'Fabric' }
+         ]
+       })
+      // PropertyPaneTextField('description', {
+      //   label: strings.DescriptionFieldLabel
+      // })
+    ];
+    let sourceO365Fields:any = [
+      PropertyFieldSitePicker('sites', {
+        label: 'Select a team',
+        initialSites: this.selectedSites,
+        context: this.context,
+        deferredValidationTime: 1000,
+        multiSelect: false,
+        onPropertyChange: this.onPropertyPaneFieldChanged.bind(this),
+        properties: this.properties,
+        onGetErrorMessage: this.validateSite.bind(this),
+        key: 'sitesFieldId'
+      }),
+      PropertyPaneHorizontalRule()
+    ];
+    if (this.properties.SPSites) sourceFields = sourceSPFields;
+    if (this.properties.teams) sourceFields = sourceO365Fields;
+    return {
+      pages: [
+        {
+          header: {
+            description: strings.PropertyPaneDescription
+          },
+          groups: [
+            {
+              groupName: "Applications",
+              groupFields: [
+                PropertyPaneButton('SP', {
+                  text: "SharePoint",
+                  buttonType: PropertyPaneButtonType.Primary,
+                  icon : 'SharepointLogoInverse',
+                  onClick: () => { this.properties.SPSites = true; this.properties.teams = false;}
+                 }),
 
+                 PropertyPaneButton('Teams', {
+                  text: "Teams",
+                  buttonType: PropertyPaneButtonType.Primary,
+                  icon: 'TeamsLogo',
+                  onClick: () => { this.properties.SPSites = false; this.properties.teams = true; }
+                 }),
+
+                 PropertyPaneHorizontalRule()
+              ]
+            },
+            {
+              groupName: strings.siteURLSelectionGroupName,
+              groupFields: sourceFields
+            }
+          ]
+        }
+      ]
+    };
+  }
   public render(): void {
     console.log("Site Map webpart properties: " + JSON.stringify(this.properties));
     const element: React.ReactElement<IBizpSiteMapProps> = React.createElement(
-      BizpSiteMap,
+/*       BizpSiteMap,
         {
           description: this.properties.description,
           title: this.properties.title,
@@ -251,6 +333,18 @@ export default class BizpSiteMapWebPart extends BaseClientSideWebPart<IBizpSiteM
           list: this.properties.list? ((typeof this.properties.list == "string") ? this.properties.list : this.properties.list[0]):null,
           context:this.context,
           themeVariant:this.themeVariant
+        } */
+        BizpSiteMap,
+        {
+          description: this.properties.description,
+          title: this.properties.title,
+          siteUrl: this.properties.siteUrl ? this.properties.siteUrl: null,
+          list: this.properties.list? ((typeof this.properties.list == "string") ? this.properties.list : this.properties.list[0]):null,
+          context:this.context,
+          themeVariant:this.themeVariant,
+          layout: this.properties.layout,
+          displayLibs:this.properties.includeLibs,
+          displayLists:this.properties.includeLists
         }
     );
     ReactDom.render(element, this.domElement);

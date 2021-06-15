@@ -6,8 +6,9 @@ import styles from './BizpSiteMap.module.scss';
 import { IBizpSiteMapProps } from './IBizpSiteMapProps';
 import { escape } from '@microsoft/sp-lodash-subset';
 import * as strings from 'BizpSiteMapWebPartStrings';
-import {​​BizpWebpartHeader,BizpHierarchyDisplay }​​ from "bizp-lib";
+import {​​BizpWebpartHeader,BizpHierarchyDisplay,BizpSiteMapDisplay }​​ from "bizp-lib";
 import {​​IBizpMenuOptions }​​ from "bizp-lib/lib/shared/IBizpSharedInterface";
+import { getPropsWithDefaults } from '@fluentui/react';
 
 export default function BizpSiteMap(props: IBizpSiteMapProps) {
   const IdForHelp = "ReminderesHelp";
@@ -29,11 +30,12 @@ export default function BizpSiteMap(props: IBizpSiteMapProps) {
     setRefresh(!r);
   }
 
-  console.log("Rendering Site Map Component, properties: " + JSON.stringify(props.siteUrl));
+  console.log("Rendering Site Map Component, properties: " + props.siteUrl);
   return (
-    <div className={ styles.bizpSiteMap } >
-      <Stack styles={stackStyles} >
-        <Stack styles={stackStyles}>
+    <div className={ styles.bizpSiteMap1 } >
+    <div className={styles.container}>
+      <div className={styles.row}>
+
           <BizpWebpartHeader title="Site Tree Map"
             showTitle={true}
             menuOptions = {menuOpts}
@@ -43,14 +45,96 @@ export default function BizpSiteMap(props: IBizpSiteMapProps) {
             context = {props.context}
           >
           </BizpWebpartHeader>
-        </Stack>
-        <Stack styles={stackStyles}>
-        <BizpHierarchyDisplay siteUrl={props.siteUrl} list={props.list} context = {props.context}
-                              refresh = {refresh} displayLibs= {false} displayLists= {false} />
-        </Stack>
-      </Stack>
+
+      </div>
+      <div className={styles.row}>
+          <div style={{ height: 600 }}>
+            {
+              (props.layout == 1) &&
+              <BizpHierarchyDisplay siteUrl={props.siteUrl} list={props.list} context = {props.context}
+              refresh = {refresh} displayLibs= {false} displayLists= {false} />
+            }
+            {
+              (props.layout > 1) &&
+              <BizpSiteMapDisplay siteUrl={props.siteUrl} list={props.list} context = {props.context}
+              refresh = {refresh} displayLibs= {props.displayLibs} displayLists= {props.displayLists}
+              layout = {props.layout} theme = {props.themeVariant}/>
+
+            }
+          </div>
+      </div>
+    </div>
     </div>
   );
+
+  /* return (
+    <div className={ styles.bizpSiteMap } >
+    <div className={styles.container}>
+      <div className={styles.row}>
+
+          <BizpWebpartHeader title="Site Tree Map"
+            showTitle={true}
+            menuOptions = {menuOpts}
+            helpId = {IdForHelp}
+            onRefresh = {onRefresh}
+            themeVariant = {props.themeVariant}
+            context = {props.context}
+          >
+          </BizpWebpartHeader>
+
+      </div>
+      <div className={styles.row}>
+        <div className={styles.column}>
+          <div style={{ height: 600 }}>
+            {
+              (props.layout == 1) &&
+              <BizpHierarchyDisplay siteUrl={props.siteUrl} list={props.list} context = {props.context}
+              refresh = {refresh} displayLibs= {false} displayLists= {false} />
+            }
+            {
+              (props.layout == 2) &&
+              <BizpSiteMapDisplay siteUrl={props.siteUrl} list={props.list} context = {props.context}
+              refresh = {refresh} displayLibs= {props.displayLibs} displayLists= {props.displayLists} />
+
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  );
+   */
+ /*        <div className={ styles.bizpSiteMap } >
+        <Stack styles={stackStyles} >
+          <Stack styles={stackStyles}>
+            <BizpWebpartHeader title="Site Tree Map"
+              showTitle={true}
+              menuOptions = {menuOpts}
+              helpId = {IdForHelp}
+              onRefresh = {onRefresh}
+              themeVariant = {props.themeVariant}
+              context = {props.context}
+            >
+            </BizpWebpartHeader>
+          </Stack>
+          <Stack styles={stackStyles}>
+            {
+              (props.layout == 1) &&
+              <BizpHierarchyDisplay siteUrl={props.siteUrl} list={props.list} context = {props.context}
+              refresh = {refresh} displayLibs= {false} displayLists= {false} />
+            }
+            {
+              (props.layout == 2) &&
+              <BizpSiteMapDisplay siteUrl={props.siteUrl} list={props.list} context = {props.context}
+              refresh = {refresh} displayLibs= {props.displayLibs} displayLists= {props.displayLists} />
+
+            }
+
+          </Stack>
+        </Stack>
+      </div>
+  );
+  */
 /*
   public render(): React.ReactElement<IBizpSiteMapProps> {
     return (

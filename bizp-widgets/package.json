@@ -15,7 +15,8 @@
     "postversion": "gulp dist",
     "load": "cls && gulp clean && gulp serve",
     "upload": "@powershell -NoProfile -ExecutionPolicy Unrestricted -Command ./upload-sppkg.ps1",
-    "prod": "build-prod-cdn.cmd"
+    "prod": "build-prod-cdn.cmd",
+    "serve": "gulp bundle --custom-serve --max_old_space_size=4096 && fast-serve"
   },
   "dependencies": {
     "@fluentui/react": "^7.166.2",
@@ -49,6 +50,7 @@
     "@types/mocha": "2.2.38",
     "ajv": "~5.2.2",
     "@types/webpack-env": "1.13.1",
-    "@types/es6-promise": "0.0.33"
+    "@types/es6-promise": "0.0.33",
+    "spfx-fast-serve-helpers": "~1.11.0"
   }
 }

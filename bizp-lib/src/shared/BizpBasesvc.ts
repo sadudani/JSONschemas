@@ -3,6 +3,9 @@ import { WebPartContext } from "@microsoft/sp-webpart-base";
 // import { sp } from "@pnp/sp";
 import { sp,Web,Fields, IFields,IFieldInfo,PermissionKind,IWebInfosData } from "@pnp/sp/presets/all";
 import { ISearchQuery, SearchResults, Search} from "@pnp/sp/search";
+import { graph } from "@pnp/graph";
+import { IUser, IUsers, User, Users, IPeople, People} from "@pnp/graph/users";
+import "@pnp/graph/users";
 
 import { ICamlQuery } from "@pnp/sp/lists";
 import {
@@ -134,6 +137,36 @@ export async function getSPLibs(siteUrl:string,siteId?:string,webId?:string):Pro
       console.log("sp search results: " + JSON.stringify(results.PrimarySearchResults));
     }
     return Promise.resolve(results.PrimarySearchResults);
+  }
+  catch (error) {
+    console.log ("Error: " + error);
+   return Promise.reject(error);
+  }
+}
+
+export async function getUsers():Promise<any> {
+
+  try {
+    const currentUser = await graph.me();
+    let allUsers = await graph.users.expand("manager")();
+    // convert flat data to tree
+    let employees:any[] = [];
+    allUsers.map((user: any) => {
+      console.log("User name: " + user.displayName + " User id: " + user.id);
+      const m = user.manager;
+      if (user.manager) {
+        console.log("Manager Name: " + m.displayName + " Manager id: " + m.id);
+      }
+      else {
+        user.manager = {id:null};
+      }
+      employees.push(user);
+    });
+    const userTree = arrayToTree(
+      employees,
+          { id: "id", parentId: "manager.id", childrenField: "children" }
+        );
+    return userTree;
   }
   catch (error) {
     console.log ("Error: " + error);

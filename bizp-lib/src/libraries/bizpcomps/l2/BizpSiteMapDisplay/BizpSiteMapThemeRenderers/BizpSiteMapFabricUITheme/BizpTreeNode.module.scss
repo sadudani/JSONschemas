@@ -1,0 +1,9 @@
+.node {
+  min-width: 100%;
+  position: relative;
+  &:nth-child(1) {
+    div{
+      border: none;
+    }
+  }
+}

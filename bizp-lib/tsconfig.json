@@ -1,10 +1,10 @@
 {
   "extends": "./node_modules/@microsoft/rush-stack-compiler-3.3/includes/tsconfig-web.json",
   "compilerOptions": {
-    "target": "ES2017",
+    "target": "ESNext",
     "forceConsistentCasingInFileNames": true,
-    "module": "esnext",
-    "moduleResolution": "node",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
     "jsx": "react",
     "declaration": true,
     "sourceMap": true,
@@ -33,7 +33,7 @@
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx"
-  ],
+, "src/libraries/bizpcomps/l2/BizpSiteMapDisplay/BizpSiteMapThemeRenderers/index.js"  ],
   "exclude": [
     "node_modules",
     "lib"

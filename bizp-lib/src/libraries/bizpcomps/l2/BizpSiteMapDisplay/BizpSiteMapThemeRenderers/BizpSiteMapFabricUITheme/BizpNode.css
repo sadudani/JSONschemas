@@ -1,0 +1,12 @@
+.rstcustom__rowStyle .ms-GroupedList{
+  background-color: transparent;
+  width: 100%;
+}
+.rstcustom__rowStyle .ms-GroupedList:hover{
+  background-color: transparent;
+}
+.rstcustom__rowLeafStyle .ms-DetailsRow-cell{
+  padding-top:8px;
+  padding-bottom: 8px;
+  min-height: 10px;
+}

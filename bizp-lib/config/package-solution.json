@@ -7,6 +7,40 @@
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,
     "isDomainIsolated": false,
+    "webApiPermissionRequests": [
+      {
+        "resource": "Microsoft Graph",
+        "scope": "User.Read.All"
+      },
+      {
+        "resource": "Microsoft Graph",
+        "scope": "Calendars.Read"
+      },
+      {
+        "resource": "Microsoft Graph",
+        "scope": "Calendars.ReadWrite"
+      },
+      {
+        "resource": "Microsoft Graph",
+        "scope": "Group.Read.All"
+      },
+      {
+        "resource": "Microsoft Graph",
+        "scope": "Group.ReadWrite.All"
+      },
+      {
+        "resource": "Windows Azure Active Directory",
+        "scope": "User.Read"
+      },
+      {
+        "resource": "Microsoft Graph",
+        "scope": "User.ReadBasic.All"
+      },
+      {
+        "resource": "Microsoft Graph",
+        "scope": "profile"
+      }
+    ],
     "developer": {
       "name": "",
       "websiteUrl": "",
