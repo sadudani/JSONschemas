@@ -1,0 +1,81 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$id": "https://example.com/employee.schema.json",
+    "title": "Reminder Entity",
+    "description": "This document defines Reminder entity",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "A unique identifier for the reminder",
+            "type": "string"
+        },
+        "moduleId": {
+            "description": "id of the associated module",
+            "type": "string"
+        },
+        "stageId": {
+            "description": "id of the associated stage",
+            "type": "string"
+        },
+        "sectionId": {
+            "description": "id of the associated section",
+            "type": "string"
+        },
+        "display name": {
+            "description": "Name displayed in UI",
+            "type": "string"
+        },
+        "enabled": {
+            "description": "Specifies if the reminder is enabled",
+            "type":"boolean"
+        },
+        "allowedDays": {
+            "description": "No of days before reminder starts",
+            "type": "string"
+        },
+        "frequency": {
+            "description": "repeat frequency in days",
+            "type": "string"
+        },
+        "Time": {
+            "description": "Issue reminder at the specified time of the day",
+            "type": "string"
+        },
+        "subject":{
+            "description":"subject field of the reminder",
+            "type":"string"
+        },
+        "body":{
+            "description":"body field of the reminder",
+            "type":"string"
+        },
+        "sendTo": {
+            "description": "primary reciepients of the reminder",
+            "type": "object",
+            "properties": {
+                "peoplePicker": {
+                    "type": "object",
+                    "properties": {
+                        "multi-select":{
+                            "type":"boolean"
+                        }
+                    }
+                }
+            }
+        },      
+        "ccTo": {
+            "description": "cc reciepients of the reminer",
+            "type": "object",
+            "properties": {
+                "peoplePicker": {
+                    "type": "object",
+                    "properties": {
+                        "multi-select":{
+                            "type":"boolean"
+                        }
+                    }
+                }      
+            }
+        }
+    }
+}

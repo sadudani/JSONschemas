@@ -1,0 +1,198 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$id": "https://example.com/employee.schema.json",
+    "title": "Field Entity",
+    "description": "This document defines Field entity",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "A unique identifier for a field",
+            "type": "string"
+        },
+        "display name": {
+            "description": "Name displayed in UI",
+            "type": "string"
+        },
+        "enabled": {
+            "description": "Specifies if the group is enabled",
+            "type":"boolean"
+        },
+        "visblility": {
+            "description": "Specifies if the group is visible",
+            "type":"object",
+            "properties":{
+                "turnOn":{
+                    "type": "boolean"
+                },
+                "Expression":{
+                    "type": "string"
+                }
+            }
+        },
+        "visblilityInGrid": {
+            "description": "Specifies if the group is visible in the grid",
+            "type":"object",
+            "properties":{
+                "turnOn":{
+                    "type": "boolean"
+                },
+                "Expression":{
+                    "type": "string"
+                }
+            }
+        },
+        "entry type": {
+            "description": "Species what kind of entry is enable (manual, system-generated, auto-filled)",
+            "type": "string"
+        },
+        "editable": {
+            "description": "Species is the entry is read-only or editable",
+            "type": "boolean"
+        },
+        "info":{
+            "description":"information about the field",
+            "type":"string"
+        },
+        "note":{
+            "description":"a note specifying some special situation about the field",
+            "type":"string"
+        },
+        "placeHolder":{
+            "type":"string"
+        },
+        "field type": {
+            "description": "Species the type of the field",
+            "type": "object",
+            "properties": {
+               "single line of text": {
+                    "type": "object",
+                    "properties": {
+                        "charLimit": {
+                            "type":"integer"
+                        }
+                    }
+                },
+                "multi line of text": {
+                    "type": "object",
+                    "properties": {
+                        "charLimit": {
+                            "type":"integer"
+                        }
+                    }
+                },
+                "button":{
+                    "type":"string"
+                },
+                "DateTime": {
+                    "type": "object",
+                    "properties": {
+                        "dateOnly": {
+                            "type":"boolean"
+                        }
+                    }
+                }      
+            },
+            "choice": {
+                "type": "object",
+                "properties": {
+                    "subtype": {
+                        "type": "string"
+                    },
+                    "values": {
+                        "type": "string"
+                    },
+                    "multi-select":{
+                        "type":"boolean"
+                    }
+                }
+            },
+            "peoplePicker": {
+                "type": "object",
+                "properties": {
+                    "multi-select":{
+                        "type":"boolean"
+                    }
+                }
+            },      
+            "lookup": {
+                "type": "object",
+                "properties": {
+                    "list":{
+                        "type":"string"
+                    },
+                    "site":{
+                        "type":"string"
+                    },
+                    "field":{
+                        "type":"string"
+                    }                
+                }
+            },
+            "numeric": {
+                "type": "object",
+                "properties": {
+                    "decimalPrecision":{
+                        "type":"integer"
+                    },
+                    "subtype":{
+                        "type":"string"
+                    }
+
+                }
+            },                     
+            "signature": {
+                "type": "object",
+                "properties": {
+                    "image":{
+                        "type":"boolean"
+                    },
+                    "login":{
+                        "type":"boolean"
+                    }
+                }
+            },
+            "attachment": {
+                "type": "object",
+                "properties": {
+                    "multi-select":{
+                        "type":"boolean"
+                    },
+                    "site":{
+                        "type":"string"
+                    },
+                    "library":{
+                        "type":"string"
+                    },
+                    "folder":{
+                        "type":"string"
+                    }
+                }
+            }                                         
+        },
+        "row":{
+            "type":"integer"
+        },
+        "column":{
+            "type":"integer"
+        },
+        "width":{
+            "type":"integer"
+        },
+        "mandatory":{
+            "type":"boolean"
+        },
+        "defaultValue":{
+            "type":"string"
+        },
+        "validation":{
+            "properties": {
+                "on":{
+                    "type":"boolean"
+                },
+                "expression":{
+                    "type":"string"
+                }
+            }
+        }
+     }
+}

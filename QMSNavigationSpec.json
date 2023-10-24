@@ -1,0 +1,37 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$id": "https://example.com/employee.schema.json",
+    "title": "Navigation Entity",
+    "description": "This document defines navigation entity",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "A unique identifier for the navigation",
+            "type": "string"
+        },
+        "internal name": {
+            "description": "Internal instance name for the navigation",
+            "type": "string"
+        },
+        "display name": {
+            "description": "Name displayed in UI",
+            "type": "string"
+        },
+        "navigationType": {
+            "description": "Specifies the type of navigation such left, right, top, etc",
+            "type":"string"
+        },
+        "singleColumn": {
+            "description": "Specifies if the menu has a single column only such as for left and top navigation",
+            "type":"boolean"
+        },
+        "menuGroups": {
+            "description": "An array of groups of menu included in the navigation",
+            "type":"array"
+        },
+        "enabled": {
+            "description": "Specifies if the navigation is enabled",
+            "type":"boolean"
+        }
+    }
+}

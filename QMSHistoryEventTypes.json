@@ -1,0 +1,43 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$id": "https://example.com/employee.schema.json",
+    "title": "History Event Type Entity",
+    "description": "This document defines History Event Type entity",
+    "type": "object",
+    "properties": {
+        "approve": {
+            "type": "string"
+        },
+        "reject": {
+            "type": "string"
+        },
+        "save": {
+            "type": "string"
+        },
+        "submit": {
+            "type": "string"
+        },
+        "close": {
+            "type": "string"
+        },
+        "clear": {
+            "type": "string"
+        },
+        "notify": {
+            "type": "string"
+        },
+        "reminder": {
+            "type": "string"
+        }
+    },
+    "oneOf": [
+        {"required": ["approve"]},
+        {"required": ["reject"]},
+        {"required": ["save"]},
+        {"required": ["submit"]},
+        {"required": ["close"]},
+        {"required": ["clear"]},
+        {"required": ["notify"]},
+        {"required": ["reminder"]}
+      ]
+}

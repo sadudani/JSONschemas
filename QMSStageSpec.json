@@ -1,0 +1,41 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$id": "https://example.com/employee.schema.json",
+    "title": "Stage Entity",
+    "description": "This document defines stage entity",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "A unique identifier for a stage",
+            "type": "string"
+        },
+        "display name": {
+            "description": "Name displayed in UI",
+            "type": "string"
+        },
+        "enabled": {
+            "description": "Specifies if the stage is enabled",
+            "type":"boolean"
+        },
+        "visble": {
+            "description": "Specifies if the stage is visible",
+            "type":"boolean"
+        },
+        "order": {
+            "description": "Specifies the order of the stage",
+            "type":"integer"
+        },
+        "Stage Type": {
+            "description": "Specifies the type of stage",
+            "type": "string"
+        },
+        "Approval Type": {
+            "description": "Specifies the type of the approval associated with the stage",
+            "type":"string"
+        },
+        "GroupId": {
+            "description": "Specifies the group of sections associated with the stage",
+            "type":"string"
+        }
+    }
+}

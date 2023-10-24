@@ -1,0 +1,49 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$id": "https://example.com/employee.schema.json",
+    "title": "Navigation Menu Entity",
+    "description": "This document defines navigation menu entity",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "A unique identifier for the navigation menu",
+            "type": "string"
+        },
+        "internal name": {
+            "description": "Internal instance name for the navigation menu",
+            "type": "string"
+        },
+        "display name": {
+            "description": "Name displayed in UI",
+            "type": "string"
+        },
+        "isHierarchical": {
+            "description": "Specifies if the menu is hierarchical",
+            "type":"boolean"
+        },
+        "isCollapsed": {
+            "description": "Specifies if the submenu items are in collapsed position",
+            "type":"boolean"
+        },
+        "submenuItems": {
+            "description": "An array of submenu items included in the menu",
+            "type":"array"
+        },
+        "row": {
+            "description": "The row number postion of the menu item",
+            "type":"integer"
+        },
+        "column": {
+            "description": "The column number postion of the menu item",
+            "type":"integer"
+        },      
+        "component": {
+            "description": "A URL pointing to the component for the menu item",
+            "type":"string"
+        },       
+        "enabled": {
+            "description": "Specifies if the menu is enabled",
+            "type":"boolean"
+        }
+    }
+}

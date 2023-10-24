@@ -1,0 +1,41 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$id": "https://example.com/employee.schema.json",
+    "title": "History Event Entity",
+    "description": "This document defines HistoryEvent",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "A unique identifier for the history event",
+            "type": "string"
+        },
+        "moduleId": {
+            "description": "id of the associated module",
+            "type": "string"
+        },
+        "stageId": {
+            "description": "id of the associated stage",
+            "type": "string"
+        },
+        "stateId": {
+            "description": "id of the associated stage",
+            "type": "string"
+        },
+        "sectionId": {
+            "description": "id of the associated section",
+            "type": "string"
+        },
+        "dateTime": {
+            "description": "Date and time of the event",
+            "type": "string"
+        },
+        "owner": {
+            "description": "Name of the event owner",
+            "type": "string"
+        },
+        "eventType": {
+            "description": "Type of the event",
+            "type": "string"
+        }
+    }
+}

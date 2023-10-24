@@ -1,0 +1,65 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$id": "https://example.com/employee.schema.json",
+    "title": "Approval Entity",
+    "description": "This document defines Approval entity",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "A unique identifier for the approval",
+            "type": "string"
+        },
+        "display name": {
+            "description": "Name displayed in UI",
+            "type": "string"
+        },
+        "enabled": {
+            "description": "Specifies if the approval is enabled",
+            "type":"boolean"
+        },
+        "visble": {
+            "description": "Specifies if the approval is visible",
+            "type":"boolean"
+        },
+        "ApprovalType": {
+            "description": "Specifies the type of approval",
+            "type":"string"
+        },
+        "Approvers" :{
+            "type": "array",
+            "items": {
+                "properties": {
+                    "Approver":{
+                        "type":"object",
+                        "properties": {
+                            "id": {
+                                "description": "Approver id",
+                                "type": "string"
+                            },
+                            "displayName": {
+                                "description": "Approver name",
+                                "type": "string"
+                            },
+                            "Title": {
+                                "description": "Approver title",
+                                "type": "string"
+                            }
+                         }
+                    },
+                    "condition":{
+                        "type":"string"
+                    },
+                    "ReviewOnly":{
+                        "type":"boolean"
+                    },
+                    "SignatureEnabled":{
+                        "type":"boolean"
+                    },
+                    "order":{
+                        "type":"number"
+                    }                       
+                }
+            }   
+        }
+    }
+}

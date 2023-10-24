@@ -1,0 +1,35 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$id": "https://example.com/employee.schema.json",
+    "title": "Group Entity",
+    "description": "This document defines Group entity",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "A unique identifier for a group",
+            "type": "string"
+        },
+        "display name": {
+            "description": "Name displayed in UI",
+            "type": "string"
+        },
+        "enabled": {
+            "description": "Specifies if the group is enabled",
+            "type":"boolean"
+        },
+        "visble": {
+            "description": "Specifies if the group is visible",
+            "type":"boolean"
+        },
+        "sections" :{
+            "type": "array",
+            "items": {
+                "properties": {
+                    "section":{
+                        "type":"object"
+                    }
+                }
+            }   
+        }
+    }
+}

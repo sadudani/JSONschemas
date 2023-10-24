@@ -1,0 +1,29 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$id": "https://example.com/employee.schema.json",
+    "title": "Section Entity",
+    "description": "This document defines Section entity",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "A unique identifier for a section",
+            "type": "string"
+        },
+        "display name": {
+            "description": "Name displayed in UI",
+            "type": "string"
+        },
+        "enabled": {
+            "description": "Specifies if the group is enabled",
+            "type":"boolean"
+        },
+        "visblility": {
+            "description": "Specifies if the group is visible",
+            "type":"boolean",
+            "visibleExpression":"string"
+        },
+        "fields" :{
+            "type": "array"   
+        }
+    }
+}

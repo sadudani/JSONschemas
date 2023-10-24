@@ -1,0 +1,21 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$id": "https://example.com/employee.schema.json",
+    "title": "Module Entity",
+    "description": "This document defines module entity",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "A unique identifier for a module",
+            "type": "string"
+        },
+        "display name": {
+            "description": "Name displayed in UI",
+            "type": "string"
+        },
+        "enabled": {
+            "description": "Specifies if the module is enabled",
+            "type":"boolean"
+        }
+    }
+}

@@ -1,0 +1,49 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$id": "https://example.com/employee.schema.json",
+    "title": "Navigation Group Entity",
+    "description": "This document defines navigation group entity",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "A unique identifier for the navigation group",
+            "type": "string"
+        },
+        "internal name": {
+            "description": "Internal instance name for the navigation group",
+            "type": "string"
+        },
+        "display name": {
+            "description": "Name displayed in UI",
+            "type": "string"
+        },
+        "isHeader": {
+            "description": "Specifies if the group should display a header",
+            "type":"boolean"
+        },
+        "isCollabsible": {
+            "description": "Specifies if the group can be collapsed",
+            "type":"boolean"
+        },
+        "isCollapsed": {
+            "description": "Specifies if the group in collapsed position",
+            "type":"boolean"
+        },
+        "row": {
+            "description": "The row number postion of the group",
+            "type":"integer"
+        },
+        "column": {
+            "description": "The column number postion of the group",
+            "type":"integer"
+        },
+        "menuItems": {
+            "description": "An array of menu items included in the group",
+            "type":"array"
+        },
+        "enabled": {
+            "description": "Specifies if the group is enabled",
+            "type":"boolean"
+        }
+    }
+}
